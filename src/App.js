@@ -18,12 +18,13 @@ class App extends Component {
 
 
     filterUsers = (e) => {
+      debugger;
     const text = e.currentTarget.value;
     const filteredUsers = this.getFilteredUsersForText(text);
       this.setState({
           filteredUsers
       })
-  };
+  };git
 
 
   render() {

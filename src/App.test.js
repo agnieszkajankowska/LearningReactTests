@@ -49,3 +49,25 @@ it('passes all users to the UsersList', () => {
    expect(app.find('UsersList').prop('users')).toEqual(["Michał", "Aga", "Patryk", "Ania", "Laura"]);
 });
 
+describe('change props', () => {
+   const users = ['Jan', 'Maria'];
+   const usersList = shallow(<UsersList users={['Ktoś tam', 'Nieważne']} />);
+   usersList.setProps({ users });
+
+    users.forEach(user => {
+        it(`includes name ${user} on the list`, () => {
+            expect(usersList.containsMatchingElement(<li>{user}</li>)).toEqual(true);
+        })
+    })
+});
+
+it('filters names on input', () => {
+    const app = shallow(<App />);
+    expect(app.find('UsersList').prop('users')).toEqual(["Michał", "Aga", "Patryk", "Ania", "Laura"]);
+
+    app.find('input').simulate('input', {currentTarget: {value: 'M'}});
+    expect(app.find('UsersList').prop('users')).toEqual(["Michał"]);
+
+    app.find('input').simulate('input', {currentTarget: {value: ''}});
+    expect(app.find('UsersList').prop('users')).toEqual(["Michał", "Aga", "Patryk", "Ania", "Laura"]);
+});
